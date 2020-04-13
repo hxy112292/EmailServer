@@ -1,10 +1,7 @@
 package uta.cloud.email.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import uta.cloud.email.entity.Email;
 import uta.cloud.email.service.EmailService;
 
@@ -15,14 +12,14 @@ public class EmailController {
     @Autowired
     EmailService emailService;
 
-    @PostMapping(value = "/send")
-    String sendRegisterEmail(@RequestBody Email email) {
+    @GetMapping(value = "/send")
+    String sendRegisterEmail(@RequestParam String address, @RequestParam String username) {
 
         String subject = "Register-xxh8517.uta.cloud";
 
-        String text = "Hi, " + email.getUsername() + "\nCongratulations! Your registration is successful.";
+        String text = "Hi, " + username + "\nCongratulations! Your registration is successful.";
 
-        emailService.SendSimpleEmail(email.getAddress(), subject, text);
+        emailService.SendSimpleEmail(address, subject, text);
 
         return "Email send successful";
     }
